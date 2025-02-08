@@ -21,12 +21,13 @@
             padding: 0;
             background-color: #f3f4f6;
             color: #333;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 1rem;
         }
 
         .flex {
@@ -68,6 +69,8 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
+            display: block;
+            padding: 0.5rem 0;
         }
 
         nav ul li a:hover {
@@ -88,6 +91,8 @@
             z-index: 1;
             border-radius: 4px;
             overflow: hidden;
+            right: 0;
+            /* Aligns dropdown to the right */
         }
 
         .dropdown-content a {
@@ -110,17 +115,17 @@
         .hero {
             background: url('HIACE.jpg') no-repeat center center/cover;
             color: #ffffff;
-            padding: 6rem 1rem;
+            padding: 4rem 1rem;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
         }
 
@@ -141,7 +146,7 @@
         /* Cars Section */
         .cars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             padding: 2rem 0;
         }
@@ -185,7 +190,7 @@
         /* Drivers Section */
         .drivers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             padding: 2rem 0;
         }
@@ -225,6 +230,7 @@
             border-radius: 8px;
             padding: 2rem;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
 
         .contact-form input,
@@ -332,6 +338,56 @@
         html[lang="id"] .id {
             display: block;
         }
+
+        /* Mobile Menu */
+        .mobile-menu-button {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #2563eb;
+                width: 100%;
+                padding: 1rem;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li a {
+                padding: 0.75rem 1rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .hero {
+                padding: 3rem 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
     </style>
 
     <script>
@@ -350,14 +406,44 @@
         // Language Toggle
         function toggleLanguage(lang) {
             document.documentElement.setAttribute('lang', lang);
+            localStorage.setItem('language', lang); // Store the language preference
         }
+
+        // Mobile Menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const navList = document.querySelector('nav ul');
+
+            mobileMenuButton.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navList.classList.contains('active')) {
+                        navList.classList.remove('active');
+                    }
+                });
+            });
+
+            // Load stored language preference on page load
+            const storedLanguage = localStorage.getItem('language');
+            if (storedLanguage) {
+                toggleLanguage(storedLanguage);
+            }
+        });
     </script>
 </head>
 
 <body class="bg-gray-100">
     <header class="bg-blue-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">BUKIT JAYA PC</h1>
+            <a href="#" class="text-2xl font-bold">BUKIT JAYA PC</a>
+            <button class="mobile-menu-button">
+                ☰
+            </button>
             <nav>
                 <ul class="flex space-x-4">
                     <li>
@@ -393,29 +479,31 @@
         </div>
     </header>
 
-    <section class="container mx-auto p-4 mt-4" id="home">
-        <div class="text-center">
-            <h2 class="text-3xl font-bold mb-4 en">"Welcome! We are pleased to welcome you to our trusted car rental service"</h2>
-            <h2 class="text-3xl font-bold mb-4 id">"Selamat datang! Kami senang menyambut Anda di layanan sewa mobil terpercaya"</h2>
+    <section class="hero">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-bold mb-4 en">Welcome! We are pleased to welcome you to our trusted car rental service</h1>
+            <h1 class="text-3xl font-bold mb-4 id">Selamat datang! Kami senang menyambut Anda di layanan sewa mobil terpercaya</h1>
             <p class="text-lg en">We offer a wide range of cars to suit your needs at affordable prices.</p>
             <p class="text-lg id">Kami menawarkan berbagai macam mobil untuk memenuhi kebutuhan Anda dengan harga terjangkau.</p>
+            <a href="#cars" class="cta-button en">Explore Cars</a>
+            <a href="#cars" class="cta-button id">Lihat Mobil</a>
         </div>
     </section>
 
     <section class="container mx-auto p-4 mt-4" id="cars">
         <h2 class="text-2xl font-bold mb-4 en">Our Cars</h2>
         <h2 class="text-2xl font-bold mb-4 id">Mobil Kami</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="bg-white p-4 rounded shadow">
+        <div class="cars-grid">
+            <div class="car-card">
                 <img src="HIACE.jpg" alt="Toyota Hiace 2024" class="w-full h-48 object-cover rounded mb-4" />
                 <h3 class="text-xl font-bold mb-2 en">Toyota Hiace 2024</h3>
                 <h3 class="text-xl font-bold mb-2 id">Toyota Hiace 2024</h3>
-                <p class="text-gray-700 mb-2 en">"Feel the sensation of comfort on your journey with our car rental".</p>
-                <p class="text-gray-700 mb-2 id">"Rasakan sensasi kenyamanan dalam perjalanan Anda bersama sewa mobil kami".</p>
+                <p class="text-gray-700 mb-2 en">Feel the sensation of comfort on your journey with our car rental.</p>
+                <p class="text-gray-700 mb-2 id">Rasakan sensasi kenyamanan dalam perjalanan Anda bersama sewa mobil kami.</p>
                 <p class="text-blue-600 font-bold en">$100/day</p>
                 <p class="text-blue-600 font-bold id">Rp1.618.500/hari</p>
             </div>
-            <div class="bg-white p-4 rounded shadow">
+            <div class="car-card">
                 <img src="INOVVA REBORN.jpg" alt="Kijang Innova Reborn" class="w-full h-48 object-cover rounded mb-4" />
                 <h3 class="text-xl font-bold mb-2 en">Kijang Innova Reborn</h3>
                 <h3 class="text-xl font-bold mb-2 id">Kijang Innova Reborn</h3>
@@ -424,7 +512,7 @@
                 <p class="text-blue-600 font-bold en">$80/day</p>
                 <p class="text-blue-600 font-bold id">Rp1.200.000/hari</p>
             </div>
-            <div class="bg-white p-4 rounded shadow">
+            <div class="car-card">
                 <img src="HIACE!.jpg" alt="Toyota Hiace 2024" class="w-full h-48 object-cover rounded mb-4" />
                 <h3 class="text-xl font-bold mb-2 en">Toyota Hiace 2024</h3>
                 <h3 class="text-xl font-bold mb-2 id">Toyota Hiace 2024</h3>
@@ -439,26 +527,23 @@
     <section class="container mx-auto p-4 mt-4" id="drivers">
         <h2 class="text-2xl font-bold mb-4 en">Our Drivers</h2>
         <h2 class="text-2xl font-bold mb-4 id">Supir Kami</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="bg-white p-4 rounded shadow">
-                <!-- Replace [...] with the actual image URL -->
-                <img src="https://storage.googleapis.com/a1aa/image/StFafMPfaMkgmE7X[...]" alt="Suwondo Bukit" class="w-full h-48 object-cover rounded mb-4" />
+        <div class="drivers-grid">
+            <div class="driver-card">
+                <img src="https://storage.googleapis.com/a1aa/image/StFafMPfaMkgmE7Xw9e2" alt="Suwondo Bukit" class="w-full h-48 object-cover rounded mb-4" />
                 <h3 class="text-xl font-bold mb-2 en">Hi, I'm Suwondo Bukit</h3>
                 <h3 class="text-xl font-bold mb-2 id">Hai, saya Suwondo Bukit</h3>
-                <p class="text-gray-700 mb-2 en">Experienced drivers with over 10 years in the industry, known for excellent customer service.</p>
+                <p class="text-gray-700 mb-2 en">Experienced driver with over 10 years in the industry, known for excellent customer service.</p>
                 <p class="text-gray-700 mb-2 id">Supir berpengalaman dengan lebih dari 10 tahun di industri ini, dikenal dengan layanan pelanggan yang luar biasa.</p>
             </div>
-            <div class="bg-white p-4 rounded shadow">
-                <!-- Replace [...] with the actual image URL -->
-                <img src="https://storage.googleapis.com/a1aa/image/CKFWDg[...]" alt="Rahmat Hery" class="w-full h-48 object-cover rounded mb-4" />
+            <div class="driver-card">
+                <img src="https://storage.googleapis.com/a1aa/image/CKFWDg4B7fP9096V6rXj" alt="Rahmat Hery" class="w-full h-48 object-cover rounded mb-4" />
                 <h3 class="text-xl font-bold mb-2 en">Hi, I'm Rahmat Hery</h3>
                 <h3 class="text-xl font-bold mb-2 id">Hai, saya Rahmat Hery</h3>
                 <p class="text-gray-700 mb-2 en">Friendly driver ready to serve you.</p>
                 <p class="text-gray-700 mb-2 id">Supir yang ramah dan siap melayani Anda.</p>
             </div>
-            <div class="bg-white p-4 rounded shadow">
-                <!-- Replace [...] with the actual image URL -->
-                <img src="https://storage.googleapis.com/a1aa/image/e7YWfimZCboqEE[...]" alt="Adi" class="w-full h-48 object-cover rounded mb-4" />
+            <div class="driver-card">
+                <img src="https://storage.googleapis.com/a1aa/image/e7YWfimZCboqEE9z56mG" alt="Adi" class="w-full h-48 object-cover rounded mb-4" />
                 <h3 class="text-xl font-bold mb-2 en">Hi, I'm Adi</h3>
                 <h3 class="text-xl font-bold mb-2 id">Hai, saya Adi</h3>
                 <p class="text-gray-700 mb-2 en">Skilled driver with a focus on safety and comfort.</p>
@@ -470,7 +555,7 @@
     <section class="container mx-auto p-4 mt-4" id="contact">
         <h2 class="text-2xl font-bold mb-4 en">Contact Us</h2>
         <h2 class="text-2xl font-bold mb-4 id">Hubungi Kami</h2>
-        <form class="bg-white p-4 rounded shadow">
+        <form class="contact-form">
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2 en" for="name">Name</label>
                 <label class="block text-gray-700 font-bold mb-2 id" for="name">Nama</label>
@@ -550,31 +635,29 @@
 
     <footer class="bg-blue-600 text-white p-4 mt-4">
         <div class="container mx-auto text-center">
-            <div class="flex justify-center space-x-4 mt-4">
-                <a class="hover:text-gray-300" href="https://wa.me/+6285362136588" target="_blank">
-                    <i class="fab fa-whatsapp fa-2x"></i>
+            <div class="social-icons">
+                <a href="https://wa.me/+6285362136588" target="_blank" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
                 </a>
-                <a class="hover:text-gray-300" href="https://facebook.com/adi.azah.545/" target="_blank">
-                    <i class="fab fa-facebook fa-2x"></i>
+                <a href="https://facebook.com/adi.azah.545/" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook"></i>
                 </a>
-                <a class="hover:text-gray-300" href="https://tiktok.com/@bukitjayarentcar" target="_blank">
-                    <i class="fab fa-tiktok fa-2x"></i>
+                <a href="https://tiktok.com/@bukitjayarentcar" target="_blank" aria-label="TikTok">
+                    <i class="fab fa-tiktok"></i>
                 </a>
-                <a class="hover:text-gray-300" href="https://www.instagram.com/bukit_jaya_rentcar/" target="_blank">
-                    <i class="fab fa-instagram fa-2x"></i>
+                <a href="https://www.instagram.com/bukit_jaya_rentcar/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
                 </a>
             </div>
-            <div class="mt-4">
-                <p class="en">Call now: 061 7863966</p>
-                <p>Call now: +6281263252294</p>
-                <p class="en">Owner's Address: Jalan Kongsi Ujung No 888, Marindal 1 Deli Serdang</p>
-                <p>
-                    Dibuat dengan ♥ oleh
-                    <a href="https://www.facebook.com/juliohartantobukit">Jhb26</a>
-                </p>
-                <p class="en">© 2025 Car Rental. All rights reserved.</p>
-                <p class="id">© 2025 Sewa Mobil. Hak cipta dilindungi undang-undang.</p>
-            </div>
+            <p class="en">Call now: 061 7863966</p>
+            <p>Call now: +6281263252294</p>
+            <p class="en">Owner's Address: Jalan Kongsi Ujung No 888, Marindal 1 Deli Serdang</p>
+            <p>
+                Dibuat dengan ♥ oleh
+                <a href="https://www.facebook.com/juliohartantobukit">Jhb26</a>
+            </p>
+            <p class="en">© 2025 Car Rental. All rights reserved.</p>
+            <p class="id">© 2025 Sewa Mobil. Hak cipta dilindungi undang-undang.</p>
         </div>
     </footer>
 
