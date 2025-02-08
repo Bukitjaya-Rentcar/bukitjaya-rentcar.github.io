@@ -1,3 +1,29 @@
+// Lightbox Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const galleryImages = document.querySelectorAll('#gallery img');
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    document.body.appendChild(lightbox);
+
+    galleryImages.forEach(image => {
+        image.addEventListener('click', (e) => {
+            e.preventDefault();
+            lightbox.classList.add('active');
+            const img = document.createElement('img');
+            img.src = image.parentElement.href;
+            while (lightbox.firstChild) {
+                lightbox.removeChild(lightbox.firstChild);
+            }
+            lightbox.appendChild(img);
+        });
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target !== e.currentTarget) return;
+        lightbox.classList.remove('active');
+    });
+});
+
 // Navbar Scroll Animation
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
