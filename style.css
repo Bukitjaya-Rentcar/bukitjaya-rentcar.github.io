@@ -438,6 +438,93 @@ html[lang="id"] .id {
     /* Change color to black on hover */
 }
 
+/* Styles untuk Social Bar (container) */
+.social-bar {
+  position: fixed; /* Membuatnya tetap di tempat saat discroll */
+  bottom: 20px;    /* Jarak dari bawah layar */
+  left: 20px;
+  display: flex;
+  /* flex-direction: column;  Kita ingin horizontal, bukan vertikal */
+  background-color: rgba(255, 255, 255, 0.8); /* Latar belakang semi-transparan */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Efek bayangan tipis */
+  z-index: 1000;    /* Pastikan berada di atas konten lain */
+  transform-style: preserve-3d; /* Penting untuk efek 3D */
+  transition: transform 0.3s ease; /* Transisi untuk efek 3D */
+}
+
+.social-bar:hover {
+    transform: translateY(-5px) rotateX(10deg); /*Efek hover + 3D*/
+}
+
+/* Styles untuk Social Icon (link) */
+.social-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;  /* Untuk memusatkan ikon secara vertikal */
+  color: white;        /* Warna ikon */
+  text-decoration: none;
+  border-radius: 50%; /* Membuat lingkaran */
+  margin: 0 5px;  /* Jarak antar ikon (horizontal) */
+  transition: all 0.3s ease; /* Efek transisi hover */
+  position: relative; /* Untuk z-index */
+}
+
+/* Warna Ikon Sosial (SESUAIKAN WARNA SESUAI BRAND MASING-MASING) */
+.social-icon.facebook {
+  background-color: #1877f2;
+}
+
+.social-icon.instagram {
+  background-color: #e4405f;
+}
+
+.social-icon.email {
+  background-color: #bb001b;
+}
+
+.social-icon.telepon {
+  background-color: #25d366;
+}
+
+.social-icon.tiktok {
+  background-color: #000000;
+  color: white;
+}
+
+
+/* Efek 3D dengan Pseudo-element */
+.social-icon::before {
+  content: '';
+  position: absolute;
+  top: 2px; /* Sesuaikan untuk efek yang diinginkan */
+  left: 2px; /* Sesuaikan untuk efek yang diinginkan */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Warna bayangan */
+  border-radius: 50%; /* Agar bayangan berbentuk lingkaran */
+  z-index: -1; /* Letakkan di belakang ikon */
+  transition: all 0.3s ease;
+}
+
+/*Efek saat di Hover*/
+.social-icon:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.social-icon:hover::before {
+    transform: translate(0,0);
+}
+
+/* Style untuk Ikon Font Awesome */
+.social-icon i {
+  font-size: 20px;
+}
+
 .typed-cursor {
             opacity: 1;
             animation: blink 0.7s infinite;
