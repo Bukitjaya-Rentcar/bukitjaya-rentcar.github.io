@@ -6,18 +6,485 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BUKIT JAYA PC</title>
     <link rel="shortcut icon" href="foto1.jpg" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <link href="https://unpkg.com/flickity@2/dist/flickity.min.css" rel="stylesheet" />
+    <link href="css/lightbox.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Navbar Styles */
+        header {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 1rem 0;
+            position: static;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease, padding 0.3s ease, top 0.3s ease;
+        }
+
+        header.scrolled {
+            top: -100px;
+            background-color: rgba(37, 99, 235, 0.9);
+            padding: 0.5rem 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: #d1d5db;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 4px;
+            overflow: hidden;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('HIACE.jpg') no-repeat center center/cover;
+            color: #ffffff;
+            padding: 4rem 1rem;
+            text-align: center;
+            margin-top: 75px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background-color: #ff6600;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #e65c00;
+        }
+
+        /* Cars Section */
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .car-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .car-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .car-card h3 {
+            font-size: 1.25rem;
+            margin: 1rem;
+        }
+
+        .car-card p {
+            margin: 0 1rem 1rem;
+            color: #666;
+        }
+
+        .car-card .price {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #2563eb;
+            margin: 0 1rem 1rem;
+        }
+
+        /* Drivers Section */
+        .drivers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .driver-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .driver-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .driver-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .driver-card h3 {
+            font-size: 1.25rem;
+            margin: 1rem;
+        }
+
+        .driver-card p {
+            margin: 0 1rem 1rem;
+            color: #666;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #1e4bb5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #d1d5db;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #d1d5db;
+        }
+
+        /* Lightbox Styles */
+        #lightbox {
+            position: static;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Language-Specific Styles */
+        .en {
+            display: block;
+        }
+
+        .id {
+            display: none;
+        }
+
+        html[lang="id"] .en {
+            display: none;
+        }
+
+        html[lang="id"] .id {
+            display: block;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-button {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                position: relative;
+                top: 100%;
+                left: 0;
+                background-color: #2563eb;
+                width: 100%;
+                padding: 1rem;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li a {
+                padding: 0.75rem 1rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .hero {
+                padding: 3rem 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Social Bar Styles */
+        .social-bar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+            transform: perspective(500px) rotateY(10deg);
+            transition: transform 0.3s ease;
+        }
+
+        .social-bar:hover {
+            transform: perspective(500px) rotateY(0deg);
+        }
+
+        .social-icon {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #1e4bb5;
+            transform: translateY(-5px);
+        }
+    </style>
+
+    <script>
+        // Navbar Scroll Animation
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Language Toggle
+        function toggleLanguage(lang) {
+            document.documentElement.setAttribute('lang', lang);
+            localStorage.setItem('language', lang); // Store the language preference
+        }
+
+        // Mobile Menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const navList = document.querySelector('nav ul');
+
+            mobileMenuButton.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navList.classList.contains('active')) {
+                        navList.classList.remove('active');
+                    }
+                });
+            });
+
+            // Load stored language preference on page load
+            const storedLanguage = localStorage.getItem('language');
+            if (storedLanguage) {
+                toggleLanguage(storedLanguage);
+            }
+        });
+    </script>
 </head>
 
 <body class="bg-gray-100">
-    <!-- Header -->
     <header class="bg-blue-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold">BUKIT JAYA PC</a>
-            <button class="mobile-menu-button">☰</button>
+            <button class="mobile-menu-button">
+                ☰
+            </button>
             <nav>
                 <ul class="flex space-x-4">
                     <li>
@@ -53,197 +520,240 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container mx-auto text-center">
-            <h1 class="text-3xl font-bold mb-4 en">Welcome! We are pleased to welcome you to our trusted car rental
-                service</h1>
-            <h1 class="text-3xl font-bold mb-4 id">Selamat datang! Kami senang menyambut Anda di layanan sewa mobil
-                terpercaya</h1>
+            <h1 class="text-3xl font-bold mb-4 en">Welcome! We are pleased to welcome you to our trusted car rental service</h1>
+            <h1 class="text-3xl font-bold mb-4 id">Selamat datang! Kami senang menyambut Anda di layanan sewa mobil terpercaya</h1>
             <p class="text-lg en">We offer a wide range of cars to suit your needs at affordable prices.</p>
-            <p class="text-lg id">Kami menawarkan berbagai macam mobil untuk memenuhi kebutuhan Anda dengan harga
-                terjangkau.</p>
+            <p class="text-lg id">Kami menawarkan berbagai macam mobil untuk memenuhi kebutuhan Anda dengan harga terjangkau.</p>
             <a href="#cars" class="cta-button en">Explore Cars</a>
             <a href="#cars" class="cta-button id">Lihat Mobil</a>
         </div>
     </section>
 
-    <!-- Spesialis Rental Section -->
-    <div class="row align-middle align-center" id="row-2029068131">
-        <div id="col-2005796390" class="col medium-12 small-12 large-6">
-            <div class="col-inner text-left">
-                <div id="text-2256523510" class="text">
-                    <h2>Spesialis Rental</h2>
-                </div>
-                <div id="text-2896242780" class="text">
-                    <h2 style="margin-top: -20px; margin-bottom: 0px;">
-                        Mobil <span data-text-color="primary">
-                            <span class="typed-me" data-string0="Avanza" data-string1="Innova" data-string2="Hiace"
-                                data-type-speed="40" data-start-delay="0" data-back-speed="1140"
-                                data-back-delay="1500" data-loop="50">Hi masih dalam pengembangan</span>
-                            <span class="typed-cursor">|</span>
-                        </span>
-                    </h2>
-                </div>
-                <div id="text-2740273420" class="text">
-                    <h2>Medan</h2>
-                </div>
-                <p>Segala Jenis Merk Mobil Ready Mulai reborn – Premium Car.</p>
-                <a href="#" class="button primary" style="border-radius:7px;">
-                    <span>Cek Harga Rental</span>
-                    <i class="icon-angle-right" aria-hidden="true"></i>
-                </a>
-                <a href="tel:+6285362136588" class="button white is-outline" style="border-radius:7px;">
-                    <i class="icon-phone" aria-hidden="true"></i>
-                    <span>Kontak Admin</span>
-                </a>
+    <section class="container mx-auto p-4 mt-4" id="cars">
+        <h2 class="text-2xl font-bold mb-4 en">Our Cars</h2>
+        <h2 class="text-2xl font-bold mb-4 id">Mobil Kami</h2>
+        <div class="cars-grid">
+            <div class="car-card">
+                <img src="HIACE.jpg" alt="Toyota Hiace 2024" class="w-full h-48 object-cover rounded mb-4" />
+                <h3 class="text-xl font-bold mb-2 en">Toyota Hiace 2024</h3>
+                <h3 class="text-xl font-bold mb-2 id">Toyota Hiace 2024</h3>
+                <p class="text-gray-700 mb-2 en">Feel the sensation of comfort on your journey with our car rental.</p>
+                <p class="text-gray-700 mb-2 id">Rasakan sensasi kenyamanan dalam perjalanan Anda bersama sewa mobil kami.</p>
+                <p class="text-blue-600 font-bold en">$100/day</p>
+                <p class="text-blue-600 font-bold id">Rp1.618.500/hari</p>
+            </div>
+            <div class="car-card">
+                <img src="INOVVA REBORN.jpg" alt="Kijang Innova Reborn" class="w-full h-48 object-cover rounded mb-4" />
+                                 <h3 class="text-xl font-bold mb-2 id">Kijang Innova Reborn</h3>
+                <p class="text-gray-700 mb-2 en">Perfect for family trips with ample space and comfort.</p>
+                <p class="text-gray-700 mb-2 id">Sempurna untuk perjalanan keluarga dengan ruang dan kenyamanan yang luas.</p>
+                <p class="text-blue-600 font-bold en">$80/day</p>
+                <p class="text-blue-600 font-bold id">Rp1.200.000/hari</p>
+            </div>
+            <div class="car-card">
+                <img src="HIACE!.jpg" alt="Toyota Hiace 2024" class="w-full h-48 object-cover rounded mb-4" />
+                <h3 class="text-xl font-bold mb-2 en">Toyota Hiace 2024</h3>
+                <h3 class="text-xl font-bold mb-2 id">Toyota Hiace 2024</h3>
+                <p class="text-gray-700 mb-2 en">Ideal for city driving with great fuel efficiency.</p>
+                <p class="text-gray-700 mb-2 id">Ideal untuk berkendara di kota dengan efisiensi bahan bakar yang baik.</p>
+                <p class="text-blue-600 font-bold en">$80,32/day</p>
+                <p class="text-blue-600 font-bold id">Rp1.300.000/hari</p>
             </div>
         </div>
+    </section>
 
-        <div id="col-1178766551" class="col medium-9 small-12 large-6 medium-col-first">
-            <div class="col-inner">
-                <div class="slider-wrapper relative" id="slider-435344586">
-                    <div class="slider slider-nav-dots-simple slider-nav-simple slider-nav-large slider-nav-light slider-nav-outside slider-style-normal is-draggable flickity-enabled"
-                        data-flickity-options='{
-                        "cellAlign": "center",
-                        "imagesLoaded": true,
-                        "lazyLoad": 1,
-                        "freeScroll": false,
-                        "wrapAround": true,
-                        "autoPlay": 6000,
-                        "pauseAutoPlayOnHover": true,
-                        "prevNextButtons": true,
-                        "contain": true,
-                        "adaptiveHeight": true,
-                        "dragThreshold": 10,
-                        "percentPosition": true,
-                        "pageDots": true,
-                        "rightToLeft": false,
-                        "draggable": true,
-                        "selectedAttraction": 0.1,
-                        "parallax": 0,
-                        "friction": 0.6
-                    }' tabindex="0">
-                        <div class="flickity-viewport" style="height: 212px; touch-action: pan-y;">
-                            <div class="flickity-slider" style="left: 0px; transform: translateX(-500%);">
-                                <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_1416394057"
-                                    style="position: absolute; left: 0%;" aria-hidden="true">
-                                    <div class="img-inner dark">
-                                        <img fetchpriority="high" decoding="async" width="1020" height="730"
-                                            src="https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-03-1118x800.png"
-                                            class="attachment-large size-large" alt=""
-                                            srcset="https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-03-1118x800.png 1118w, https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-03-559x400.png 559w, https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-03-768x549.png 768w, https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-03.png 1447w"
-                                            sizes="(max-width: 1020px) 100vw, 1020px">
-                                    </div>
-                                </div>
-                                <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_955497763"
-                                    style="position: absolute; left: 100%;" aria-hidden="true">
-                                    <div class="img-inner dark">
-                                        <img decoding="async" width="1020" height="729"
-                                            src="https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-04-1119x800.png"
-                                            class="attachment-large size-large" alt=""
-                                            srcset="https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-04-1119x800.png 1119w, https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-04-560x400.png 560w, https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-04-768x549.png 768w, https://www.bukitjayapc.com/wp-content/uploads/2022/09/tabitha-04.png 1448w"
-                                            sizes="(max-width: 1020px) 100vw, 1020px">
-                                    </div>
-                                </div>
-                                <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_1436281195"
-                                    aria-hidden="true" style="position: absolute; left: 200%;">
-                                    <div class="img-inner dark">
-                                        <img decoding="async" width="688" height="408"
-                                            src="https://www.bukitjayapc.com/wp-content/uploads/2022/11/2-hiace-premio-white.png"
-                                            class="attachment-large size-large" alt=""
-                                            srcset="https://www.bukitjayapc.com/wp-content/uploads/2022/11/2-hiace-premio-white.png 688w, https://bukitjayapc.com/wp-content/uploads/2022/11/2-hiace-premio-white-675x400.png 675w"
-                                            sizes="(max-width: 688px) 100vw, 688px">
-                                    </div>
-                                </div>
-                                <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_199810037"
-                                    aria-hidden="true" style="position: absolute; left: 300%;">
-                                    <div class="img-inner dark">
-                                        <img loading="lazy" decoding="async" width="688" height="408"
-                                            src="https://www.bukitjayapc.com/wp-content/uploads/2022/11/2-hiace-commuter-silver-metallic.png"
-                                            class="attachment-large size-large" alt=""
-                                            srcset="https://www.dutamedanrental.com/wp-content/uploads/2022/11/2-hiace-commuter-silver-metallic.png 688w, https://www.bukitjayapc.com/wp-content/uploads/2022/11/2-hiace-commuter-silver-metallic-675x400.png 675w"
-                                            sizes="(max-width: 688px) 100vw, 688px">
-                                    </div>
-                                </div>
-                                <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_1025069731"
-                                    style="position: absolute; left: 400%;" aria-hidden="true">
-                                    <div class="img-inner dark">
-                                        <img loading="lazy" decoding="async" width="700" height="400"
-                                            src="https://www.bukitjayapc.com/wp-content/uploads/2023/09/alphard-hitam-2023.png"
-                                            class="attachment-large size-large" alt="">
-                                    </div>
-                                </div>
-                                <div class="img has-hover x md-x lg-x y md-y lg-y is-selected" id="image_1742755656"
-                                    style="position: absolute; left: 500%;">
-                                    <div class="img-inner dark">
-                                        <img loading="lazy" decoding="async" width="700" height="400"
-                                            src="https://www.bukitjayapc.com/wp-content/uploads/2023/09/nenix-depan-slider.png"
-                                            class="attachment-large size-large" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="flickity-button flickity-prev-next-button previous" type="button"
-                            aria-label="Previous">
-                            <svg class="flickity-button-icon" viewBox="0 0 100 100">
-                                <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path>
-                            </svg>
-                        </button>
-                        <button class="flickity-button flickity-prev-next-button next" type="button"
-                            aria-label="Next">
-                            <svg class="flickity-button-icon" viewBox="0 0 100 100">
-                                <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"
-                                    transform="translate(100, 100) rotate(180)"></path>
-                            </svg>
-                        </button>
-                        <ol class="flickity-page-dots">
-                            <li class="dot" aria-label="Page dot 1"></li>
-                            <li class="dot" aria-label="Page dot 2"></li>
-                            <li class="dot" aria-label="Page dot 3"></li>
-                            <li class="dot" aria-label="Page dot 4"></li>
-                            <li class="dot" aria-label="Page dot 5"></li>
-                            <li class="dot is-selected" aria-label="Page dot 6" aria-current="step"></li>
-                        </ol>
-                    </div>
-                    <div class="loading-spin dark large centered" style="display: none;"></div>
-                </div>
+    <section class="container mx-auto p-4 mt-4" id="drivers">
+        <h2 class="text-2xl font-bold mb-4 en">Our Drivers</h2>
+        <h2 class="text-2xl font-bold mb-4 id">Supir Kami</h2>
+        <div class="drivers-grid">
+            <div class="driver-card">
+                <img src="https://storage.googleapis.com/a1aa/image/StFafMPfaMkgmE7Xw9e2" alt="Suwondo Bukit"
+                    class="w-full h-48 object-cover rounded mb-4" />
+                <h3 class="text-xl font-bold mb-2 en">Hi, I'm Suwondo Bukit</h3>
+                <h3 class="text-xl font-bold mb-2 id">Hai, saya Suwondo Bukit</h3>
+                <p class="text-gray-700 mb-2 en">Experienced driver with over 10 years in the industry, known for
+                    excellent customer service.</p>
+                <p class="text-gray-700 mb-2 id">Supir berpengalaman dengan lebih dari 10 tahun di industri ini, dikenal
+                    dengan layanan pelanggan yang luar biasa.</p>
+            </div>
+            <div class="driver-card">
+                <img src="https://storage.googleapis.com/a1aa/image/CKFWDg4B7fP9096V6rXj" alt="Rahmat Hery"
+                    class="w-full h-48 object-cover rounded mb-4" />
+                <h3 class="text-xl font-bold mb-2 en">Hi, I'm Rahmat Hery</h3>
+                <h3 class="text-xl font-bold mb-2 id">Hai, saya Rahmat Hery</h3>
+                <p class="text-gray-700 mb-2 en">Friendly driver ready to serve you.</p>
+                <p class="text-gray-700 mb-2 id">Supir yang ramah dan siap melayani Anda.</p>
+            </div>
+            <div class="driver-card">
+                <img src="https://storage.googleapis.com/a1aa/image/e7YWfimZCboqEE9z56mG" alt="Adi"
+                    class="w-full h-48 object-cover rounded mb-4" />
+                <h3 class="text-xl font-bold mb-2 en">Hi, I'm Adi</h3>
+                <h3 class="text-xl font-bold mb-2 id">Hai, saya Adi</h3>
+                <p class="text-gray-700 mb-2 en">Skilled driver with a focus on safety and comfort.</p>
+                <p class="text-gray-700 mb-2 id">Supir terampil dengan fokus pada keselamatan dan kenyamanan.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white p-4 mt-4">
-        <div class="container mx-auto text-center">
-            <div class="social-icons">
-                <a href="https://wa.me/+6285362136588" target="_blank" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://facebook.com/adi.azah.545/" target="_blank" aria-label="Facebook">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://tiktok.com/@bukitjayarentcar" target="_blank" aria-label="TikTok">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://www.instagram.com/bukit_jaya_rentcar/" target="_blank" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:your-email@gmail.com" target="_blank" aria-label="Gmail">
-                    <i class="fab fa-google"></i>
-                </a>
+    <section class="container mx-auto p-4 mt-4" id="contact">
+        <h2 class="text-2xl font-bold mb-4 en">Contact Us</h2>
+        <h2 class="text-2xl font-bold mb-4 id">Hubungi Kami</h2>
+        <form class="contact-form">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2 en" for="name">Name</label>
+                <label class="block text-gray-700 font-bold mb-2 id" for="name">Nama</label>
+                <input class="w-full p-2 border border-gray-300 rounded" id="name" placeholder="Name" type="text" />
             </div>
-            <p class="en">Call now: 061 7863966</p>
-            <p>Call now: +6281263252294</p>
-            <p class="en">Email: <a href="mailto:your-email@gmail.com">your-email@gmail.com</a></p>
-            <p class="en">Owner's Address: Jalan Kongsi Ujung No 888, Marindal 1 Deli Serdang</p>
-            <p>Dibuat dengan ♥ oleh <a href="https://www.facebook.com/juliohartantobukit">Jhb26</a></p>
-            <p class="en">© 2025 Car Rental. All rights reserved.</p>
-            <p class="id">© 2025 Sewa Mobil. Hak cipta dilindungi undang-undang.</p>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2 en" for="email">Email</label>
+                <label class="block text-gray-700 font-bold mb-2 id" for="email">Email</label>
+                <input class="w-full p-2 border border-gray-300 rounded" id="email" placeholder="Email" type="email" />
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2 en" for="message">Message</label>
+                <label class="block text-gray-700 font-bold mb-2 id" for="message">Pesan</label>
+                <textarea class="w-full p-2 border border-gray-300 rounded" id="message" placeholder="Your Message"></textarea>
+            </div>
+            <button class="bg-blue-600 text-white p-2 rounded" type="submit">
+                <span class="en">Send Message</span>
+                <span class="id">Kirim Pesan</span>
+            </button>
+        </form>
+    </section>
+
+    <section class="container mx-auto p-4 mt-4" id="services">
+        <h2 class="text-2xl font-bold mb-4 en">Our Additional Services</h2>
+        <h2 class="text-2xl font-bold mb-4 id">Layanan Tambahan Kami</h2>
+        <img src="foto1.jpg" alt="Bukit Jaya PC Logo" class="w-full h-auto" />
+        <div class="bg-white p-4 rounded shadow">
+            <p class="text-lg mb-4 en">We also offer online money transfers between banks, all-operator mobile top-ups,
+                online payments, and more.</p>
+            <p class="text-lg mb-4 id">Kami juga melayani pengiriman uang online antara bank, isi pulsa all operator,
+                pembayaran online, dan lainnya.</p>
+            <p class="text-lg mb-4 en">Our services include transfers to all banks and top-ups for all mobile
+                operators.</p>
+            <p class="text-lg mb-4 id">Layanan kami mencakup transfer ke semua bank dan isi ulang untuk semua operator
+                seluler.</p>
         </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="container mx-auto p-4 mt-4" id="gallery">
+        <h2 class="text-2xl font-bold mb-4 en">Gallery</h2>
+        <h2 class="text-2xl font-bold mb-4 id">Galeri</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Image 1 -->
+            <div class="bg-white p-4 rounded shadow">
+                <a href="HIACE.jpg" data-lightbox="gallery" data-title="Toyota Hiace 2024 Car Rental">
+                    <img src="HIACE.jpg" alt="Toyota Hiace 2024 Car Rental" class="w-full h-48 object-cover rounded mb-4" />
+                </a>
+                <p class="text-gray-700 mb-2 en">Toyota Hiace 2024</p>
+                <p class="text-gray-700 mb-2 id">Toyota Hiace 2024</p>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="bg-white p-4 rounded shadow">
+                <a href="INOVVA REBORN.jpg" data-lightbox="gallery" data-title="Kijang Innova Reborn Family Car">
+                    <img src="INOVVA REBORN.jpg" alt="Kijang Innova Reborn Family Car" class="w-full h-48 object-cover rounded mb-4" />
+                </a>
+                <p class="text-gray-700 mb-2 en">Kijang Innova Reborn</p>
+                <p class="text-gray-700 mb-2 id">Kijang Innova Reborn</p>
+            </div>
+
+            <!-- Image 3 -->
+            <div class="bg-white p-4 rounded shadow">
+                <a href="HIACE!.jpg" data-lightbox="gallery" data-title="Toyota Hiace 2024 Car Rental">
+                    <img src="HIACE!.jpg" alt="Toyota Hiace 2024 Car Rental" class="w-full h-48 object-cover rounded mb-4" />
+                </a>
+                <p class="text-gray-700 mb-2 en">Toyota Hiace 2024</p>
+                <p class="text-gray-700 mb-2 id">Toyota Hiace 2024</p>
+            </div>
+
+            <!-- Image 4 -->
+            <div class="bg-white p-4 rounded shadow">
+                <a href="foto1.jpg" data-lightbox="gallery" data-title="Additional Services Bukit Jaya PC">
+                    <img src="foto1.jpg" alt="Additional Services Bukit Jaya PC" class="w-full h-48 object-cover rounded mb-4" />
+                </a>
+                <p class="text-gray-700 mb-2 en">Additional Service</p>
+                <p class="text-gray-700 mb-2 id">Layanan Tambahan</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-blue-600 text-white p-4 text-center mt-8">
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="social-icon"><i class="fas fa-phone"></i></a>
+        </div>
+        <p>© 2024 BUKIT JAYA PC. All rights reserved.</p>
+        <p>
+            <a href="#" class="en">Terms of Service</a> |
+            <a href="#" class="id">Ketentuan Layanan</a>
+        </p>
     </footer>
 
-    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-    <script src="script.js"></script>
-</body>
+    <script src="js/lightbox.min.js"></script>
+    <!-- Or from a CDN -->
 
+    <script>
+        // Navbar Scroll Animation
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Language Toggle
+        function toggleLanguage(lang) {
+            document.documentElement.setAttribute('lang', lang);
+            localStorage.setItem('language', lang); // Store the language preference
+        }
+
+        // Mobile Menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const navList = document.querySelector('nav ul');
+
+            mobileMenuButton.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navList.classList.contains('active')) {
+                        navList.classList.remove('active');
+                    }
+                });
+            });
+
+            // Load stored language preference on page load
+            const storedLanguage = localStorage.getItem('language');
+            if (storedLanguage) {
+                toggleLanguage(storedLanguage);
+            }
+        });
+    </script>
+
+    <div class="social-bar">
+        <a href="https://www.facebook.com/[username facebook anda]" class="social-icon facebook"><i
+                class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/[username instagram anda]" class="social-icon instagram"><i
+                class="fab fa-instagram"></i></a>
+        <a href="mailto:[alamat email anda]" class="social-icon email"><i class="fas fa-envelope"></i></a>
+        <a href="tel:[nomor telepon anda]" class="social-icon telepon"><i class="fas fa-phone"></i></a>
+        <a href="https://www.tiktok.com/@[username tiktok anda]" class="social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/[+6285362136588]" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+    </div>z`
+
+    <script src="js/lightbox.min.js"></script> <!-- Or from a CDN -->
+</body>
 </html>
