@@ -41,7 +41,7 @@
             background-color: #2563eb;
             color: #ffffff;
             padding: 1rem 0;
-            position: static;
+            position: fixed; /* Menjadikan header tetap di atas */
             top: 0;
             left: 0;
             width: 100%;
@@ -50,7 +50,7 @@
         }
 
         header.scrolled {
-            top: -100px;
+            top: 0; /* Memastikan header tetap terlihat saat di-scroll */
             background-color: rgba(37, 99, 235, 0.9);
             padding: 0.5rem 0;
         }
@@ -115,14 +115,13 @@
 
         /* Hero Section */
         .hero {
-            /*background: var(--hero-bg-image, url('HIACE.jpg')) no-repeat center center/cover;*/ /* Modifikasi */
-            background-repeat: no-repeat; /* Tambahkan */
-            background-position: center center; /* Tambahkan */
-            background-size: cover; /* Tambahkan */
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
             color: #ffffff;
             padding: 4rem 1rem;
             text-align: center;
-            margin-top: 75px;
+            margin-top: 75px; /* Memberi ruang di bawah header yang fixed */
             transition: background-image 1s ease-in-out;
         }
 
@@ -745,8 +744,11 @@
         <a href="https://tiktok.com/@bukitjayarentcar" class="social-icon tiktok"><i class="fab fa-tiktok"></i></a>
         <a href="https://wa.me/+6285362136588" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
+        // Semua kode JavaScript di sini
+
         // Navbar Scroll Animation
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
@@ -759,7 +761,7 @@
 
         // Language Toggle
         function toggleLanguage(lang) {
-            document.documentElement.setAttribute('lang',lang);
+            document.documentElement.setAttribute('lang', lang);
             localStorage.setItem('language', lang); // Store the language preference
         }
 
@@ -798,7 +800,7 @@
 
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - 50, // Adjust for header height
+                            top: targetElement.offsetTop - document.querySelector('header').offsetHeight,
                             behavior: 'smooth'
                         });
 
@@ -829,13 +831,24 @@
 
             const heroSection = document.getElementById('hero-section');
 
+            // Memastikan heroSection ditemukan
+            if (!heroSection) {
+                console.error("Elemen dengan ID 'hero-section' tidak ditemukan!");
+                return; // Menghentikan eksekusi jika elemen tidak ditemukan
+            }
+
             function changeBackgroundImage() {
-                heroSection.style.backgroundImage = `url('${backgroundImages[currentImageIndex]}')`;
+                const imageUrl = backgroundImages[currentImageIndex];
+                console.log("Mengatur gambar latar belakang ke:", imageUrl); // Debugging
+                heroSection.style.backgroundImage = `url('${imageUrl}')`;
                 currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
             }
 
-            setInterval(changeBackgroundImage, 5000);
+            // Menjalankan pertama kali
             changeBackgroundImage();
+
+            // Interval untuk mengganti gambar
+            setInterval(changeBackgroundImage, 5000);
 
         });
     </script>
