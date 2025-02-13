@@ -41,7 +41,7 @@
             background-color: #2563eb;
             color: #ffffff;
             padding: 1rem 0;
-            position: fixed; /* Menjadikan header tetap di atas */
+            position: static;
             top: 0;
             left: 0;
             width: 100%;
@@ -50,7 +50,7 @@
         }
 
         header.scrolled {
-            top: 0; /* Memastikan header tetap terlihat saat di-scroll */
+            top: -100px;
             background-color: rgba(37, 99, 235, 0.9);
             padding: 0.5rem 0;
         }
@@ -115,14 +115,11 @@
 
         /* Hero Section */
         .hero {
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
+            background: url('HIACE.jpg') no-repeat center center/cover;
             color: #ffffff;
             padding: 4rem 1rem;
             text-align: center;
-            margin-top: 75px; /* Memberi ruang di bawah header yang fixed */
-            transition: background-image 1s ease-in-out;
+            margin-top: 75px;
         }
 
         .hero h1 {
@@ -578,7 +575,7 @@
         </div>
     </header>
 
-    <section class="hero" id="hero-section">
+    <section class="hero">
         <div class="container mx-auto text-center">
             <h1 class="text-3xl font-bold mb-4 en">Welcome! We are pleased to welcome you to our trusted car rental
                 service</h1>
@@ -744,11 +741,8 @@
         <a href="https://tiktok.com/@bukitjayarentcar" class="social-icon tiktok"><i class="fab fa-tiktok"></i></a>
         <a href="https://wa.me/+6285362136588" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
-        // Semua kode JavaScript di sini
-
         // Navbar Scroll Animation
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
@@ -770,7 +764,7 @@
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const navList = document.querySelector('nav ul');
 
-            mobileMenuButton.addEventListener('click', () => {
+            mobileMenu            mobileMenuButton.addEventListener('click', () => {
                 navList.classList.toggle('active');
             });
 
@@ -790,8 +784,8 @@
                 toggleLanguage(storedLanguage);
             }
 
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+             // Smooth scrolling for anchor links
+             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
 
@@ -800,7 +794,7 @@
 
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - document.querySelector('header').offsetHeight,
+                            top: targetElement.offsetTop - 50, // Adjust for header height
                             behavior: 'smooth'
                         });
 
@@ -811,45 +805,13 @@
                     }
                 });
             });
+        });
 
-            lightbox.option({
-                resizeDuration: 200,
-                wrapAround: true,
-                showImageNumberLabel: true,
-                disableScrolling: true,
-            });
-
-            // Background image carousel
-            const backgroundImages = [
-                'HIACE.jpg',
-                'INOVVA REBORN.jpg',
-                'HIACE!.jpg',
-                'foto1.jpg'
-            ];
-
-            let currentImageIndex = 0;
-
-            const heroSection = document.getElementById('hero-section');
-
-            // Memastikan heroSection ditemukan
-            if (!heroSection) {
-                console.error("Elemen dengan ID 'hero-section' tidak ditemukan!");
-                return; // Menghentikan eksekusi jika elemen tidak ditemukan
-            }
-
-            function changeBackgroundImage() {
-                const imageUrl = backgroundImages[currentImageIndex];
-                console.log("Mengatur gambar latar belakang ke:", imageUrl); // Debugging
-                heroSection.style.backgroundImage = `url('${gelap.png}')`;
-                currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
-            }
-
-            // Menjalankan pertama kali
-            changeBackgroundImage(gelap.png);
-
-            // Interval untuk mengganti gambar
-            setInterval(changeBackgroundImage, 5000);
-
+        lightbox.option({
+            resizeDuration: 200,
+            wrapAround: true,
+            showImageNumberLabel: true,
+            disableScrolling: true,
         });
     </script>
 </body>
