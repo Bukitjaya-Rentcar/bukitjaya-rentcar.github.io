@@ -840,12 +840,12 @@
             function changeBackgroundImage() {
                 const imageUrl = backgroundImages[currentImageIndex];
                 console.log("Mengatur gambar latar belakang ke:", imageUrl); // Debugging
-                heroSection.style.backgroundImage = `url('${imageUrl}')`;
+                heroSection.style.backgroundImage = `url('${Gelap.png}')`;
                 currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
             }
 
             // Menjalankan pertama kali
-            changeBackgroundImage();
+            changeBackgroundImage(Gelap.png);
 
             // Interval untuk mengganti gambar
             setInterval(changeBackgroundImage, 5000);
