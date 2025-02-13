@@ -115,11 +115,15 @@
 
         /* Hero Section */
         .hero {
-            background: url('HIACE.jpg') no-repeat center center/cover;
+            /*background: var(--hero-bg-image, url('HIACE.jpg')) no-repeat center center/cover;*/ /* Modifikasi */
+            background-repeat: no-repeat; /* Tambahkan */
+            background-position: center center; /* Tambahkan */
+            background-size: cover; /* Tambahkan */
             color: #ffffff;
             padding: 4rem 1rem;
             text-align: center;
             margin-top: 75px;
+            transition: background-image 1s ease-in-out;
         }
 
         .hero h1 {
@@ -575,7 +579,7 @@
         </div>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="hero-section">
         <div class="container mx-auto text-center">
             <h1 class="text-3xl font-bold mb-4 en">Welcome! We are pleased to welcome you to our trusted car rental
                 service</h1>
@@ -755,7 +759,7 @@
 
         // Language Toggle
         function toggleLanguage(lang) {
-            document.documentElement.setAttribute('lang', lang);
+            document.documentElement.setAttribute('lang',lang);
             localStorage.setItem('language', lang); // Store the language preference
         }
 
@@ -763,7 +767,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const navList = document.querySelector('nav ul');
-                        mobileMenuButton.addEventListener('click', () => {
+
+            mobileMenuButton.addEventListener('click', () => {
                 navList.classList.toggle('active');
             });
 
@@ -783,8 +788,8 @@
                 toggleLanguage(storedLanguage);
             }
 
-             // Smooth scrolling for anchor links
-             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
 
@@ -804,13 +809,34 @@
                     }
                 });
             });
-        });
 
-        lightbox.option({
-            resizeDuration: 200,
-            wrapAround: true,
-            showImageNumberLabel: true,
-            disableScrolling: true,
+            lightbox.option({
+                resizeDuration: 200,
+                wrapAround: true,
+                showImageNumberLabel: true,
+                disableScrolling: true,
+            });
+
+            // Background image carousel
+            const backgroundImages = [
+                'HIACE.jpg',
+                'INOVVA REBORN.jpg',
+                'HIACE!.jpg',
+                'foto1.jpg'
+            ];
+
+            let currentImageIndex = 0;
+
+            const heroSection = document.getElementById('hero-section');
+
+            function changeBackgroundImage() {
+                heroSection.style.backgroundImage = `url('${backgroundImages[currentImageIndex]}')`;
+                currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+            }
+
+            setInterval(changeBackgroundImage, 5000);
+            changeBackgroundImage();
+
         });
     </script>
 </body>
