@@ -45,19 +45,16 @@
 
         /* Navbar Styles */
         header {
-            background-color: rgba(37, 99, 235, 0.8);
-            /* Latar belakang semi-transparan */
+            background-color: #2563eb;
             color: #ffffff;
             padding: 1rem 0;
-            position: fixed;
-            /* Navbar tetap di atas */
+            position: static;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            transition: background-color 0.3s ease, padding 0.3s ease;
+            transition: background-color 0.3s ease, padding 0.3s ease, top 0.3s ease;
         }
-
         header.scrolled {
             background-color: rgba(37, 99, 235, 0.9);
             padding: 0.5rem 0;
